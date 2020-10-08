@@ -28,7 +28,7 @@ class matrix:
     def __repr__(self):
         return 'matrix({})'.format(self.data)
 
-    def __add__(self, other: matrix) -> matrix:
+    def __add__(self, other):
         if isinstance(other, matrix):
             if self.shape == other.shape:
                 return matrix([
@@ -40,7 +40,7 @@ class matrix:
         else:
             raise TypeError('cannot add {} to {}.'.format(type(self), type(other)))
 
-    def  __radd__(self, other: matrix) -> matrix:
+    def  __radd__(self, other):
         if isinstance(other, matrix):
             if other.shape == self.shape:
                 return matrix([
@@ -52,7 +52,7 @@ class matrix:
         else:
             raise TypeError('cannot add {} to {}.'.format(type(other), type(self)))
 
-    def __sub__(self, other: matrix) -> matrix:
+    def __sub__(self, other):
         if isinstance(other, matrix):
             if self.shape == other.shape:
                 return matrix([
@@ -64,7 +64,7 @@ class matrix:
         else:
             raise TypeError('cannot subtract {} from {}.'.format(type(other), type(self)))
 
-    def __rsub__(self, other: matrix) -> matrix:
+    def __rsub__(self, other):
         if isinstance(other, matrix):
             if other.shape == self.shape:
                 return matrix([
