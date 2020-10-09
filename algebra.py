@@ -3,26 +3,35 @@ class matrix:
         if not isinstance(data, list):
             raise TypeError('Not supported type {}.'.format(type(data)))
 
-        depth = 0
-        row = len(data)
-        column = None
-        if isinstance(data[0], int) or isinstance(data[0], float):
-            column = 1
-        else:
-            for inner in data:
-                for elm in inner:
-                    if not isinstance(elm, int) or isinstance(elm, float):
-                        raise TypeError('{} is not matrix.'.format(data))
-                if column is None:
-                    column = len(inner)
-                else:
-                    compare = len(inner)
-                    if not column == compare:
-                        raise TypeError('{} is not matrix'.format(data))
-                    column = compare
+        _row = len(data)
+        _column = None
+        _is_vector = False
+        for elm in data:
+            if isinstance(elm, int) or isinstance(elm, float):
+                _is_vector = True
+            else:
+                _is_vector = False
+        if _is_vector:
+            data = [data]
+            _row = 1
+
+        for inner in data:
+            for elm in inner:
+                if not isinstance(elm, int) or isinstance(elm, float):
+                    raise TypeError('{} is not matrix.'.format(data))
+            if _column is None:
+                _column = len(inner)
+            else:
+                compare = len(inner)
+                if not _column == compare:
+                    raise TypeError('{} is not matrix'.format(data))
+                _column = compare
         
         self.data = data
-        self.shape = row, column
+        self.shape = _row, _column
+        self.T = [
+            list(row) for row in zip(*data)
+        ]
 
                 
     def __repr__(self):
@@ -75,3 +84,52 @@ class matrix:
                 raise ValueError('Shape: {} does not equal to {}.'.format(other.shape, self.shape))
         else:
             raise TypeError('cannot subtract {} from {}.'.format(type(self), type(other)))
+
+    def __mul__(self, other):
+        if isinstance(other, matrix):
+            if self.shape[0] == other.shape[1]:
+                return matrix([
+                    [
+                        sum([
+                            x * y for x, y in zip(X, Y)
+                        ])
+                        for Y in other.T
+                    ]
+                    for X in self.data
+                ])
+            else:
+                raise ValueError('Shape: expect input shape ({}, any) and (any, {}), but {} and {}'.format(
+                                    self.shape[0], self.shape[0], self.shape, other.shape))
+            
+        else:
+            raise TypeError('cannot multiply {} and {}.'.format(type(self), type(other)))
+
+    def __rmul__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            return matrix([
+                [self.data * x for x in X]
+                    for X in other.data
+            ])
+        elif isinstance(other, matrix):
+            if self.shape[0] == other.shape[1]:
+                return matrix([
+                    [
+                        sum([
+                            x * y for x, y in zip(X, Y)
+                        ])
+                        for Y in self.T
+                    ]
+                    for X in other
+                ])
+            else:
+                raise ValueError('Shape: expect input shape ({}, any) and (any, {}), but {} and {}'.format(
+                                    self.shape[1], self.shape[1], other.shape, self.shape))
+            
+        else:
+            raise TypeError('cannot multiply {} and {}.'.format(type(other), type(self)))
+
+    def __div__(self, other):
+        raise TypeError('cannot use operator (/) for matrix')
+
+    def __rdiv__(self, other):
+        raise TypeError('cannot use operator (/) for matrix')
