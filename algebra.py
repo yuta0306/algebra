@@ -107,8 +107,8 @@ class matrix:
     def __rmul__(self, other):
         if isinstance(other, int) or isinstance(other, float):
             return matrix([
-                [self.data * x for x in X]
-                    for X in other.data
+                [other * x for x in X]
+                    for X in self.data
             ])
         elif isinstance(other, matrix):
             if self.shape[0] == other.shape[1]:
