@@ -7,3 +7,6 @@ k = 2
 print(x.T)
 print(len(x))
 print(alg.zeros((3, 3)))
+print(alg.zeros_like(x))
+print(alg.ones((3, 3)))
+print(alg.ones_like(x))

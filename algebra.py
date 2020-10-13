@@ -173,7 +173,7 @@ class matrix:
         return self._T
 
 
-def zeros(shape: list or tuple):
+def zeros(shape: list or tuple) -> matrix:
     if isinstance(shape, list) or isinstance(shape, tuple):
         try:
             return matrix([
@@ -183,4 +183,37 @@ def zeros(shape: list or tuple):
         except ValueError:
             raise ValueError('expect the shape (int, int) and the length is 2, but {} and {}'.format(shape, len(shape)))
     else:
-        raise TypeError('Not supported type {}.'.format(type(shape)))
+        raise TypeError('Not supported type {}'.format(type(shape)))
+
+def zeros_like(array: matrix) -> matrix:
+    if isinstance(array, matrix):
+        return matrix([
+            [0 for _ in range(array.column)]
+                for _ in range(array.row)
+        ])
+    else:
+        raise TypeError('Not supprted type {}'.format(type(array)))
+
+def ones(shape: list or tuple) -> matrix:
+    if isinstance(shape, list) or isinstance(shape, tuple):
+        if shape[0] == shape[1]:
+            return matrix([
+                [0 if not i==j else 1 for j in range(shape[1])]
+                    for i in range(shape[0])
+            ])
+        else:
+            raise ValueError('expect the shape ({0}, {0}), but ({1})'.format(shape[0], shape))
+    else:
+        raise TypeError('Not supported type {}'.format(type(shape)))
+
+def ones_like(array: matrix) -> matrix:
+    if isinstance(array, matrix):
+        if array.row == array.column:
+            return matrix([
+                [0 if not i==j else 1 for i in range(array.column)]
+                    for j in range(array.row)
+            ])
+        else:
+            raise ValueError('expect the shape ({0}, {0}), but ({1})'.format(array.row, array.shape))
+    else:
+        raise TypeError('Not supprted type {}'.format(type(array)))
