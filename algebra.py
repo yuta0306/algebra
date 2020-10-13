@@ -1,5 +1,5 @@
 class matrix:
-    def __init__(self, data: list):
+    def __init__(self, data: list, retain_T: bool=True):
         if not isinstance(data, list):
             raise TypeError('Not supported type {}.'.format(type(data)))
 
@@ -28,10 +28,13 @@ class matrix:
                 _column = compare
         
         self._data = data
+        self._row = _row
+        self._column = _column
         self._shape = _row, _column
-        self._T = [
-            list(row) for row in zip(*data)
-        ]
+        if retain_T:
+            self._T = matrix([
+                list(row) for row in zip(*data)
+            ], False)
 
                 
     def __repr__(self):
@@ -40,6 +43,9 @@ class matrix:
             p += '\n         ' + str(row)
         p += '\n       ]'
         return 'matrix({})\n'.format(p)
+
+    def __len__(self):
+        return len(self.data)
 
     def __add__(self, other):
         if isinstance(other, matrix):
@@ -145,8 +151,18 @@ class matrix:
     @data.deleter
     def data(self):
         self._data = None
+        self._row = None
+        self._column = None
         self._shape = None
         self._T = None
+
+    @property
+    def row(self):
+        return self._row
+
+    @property
+    def column(self):
+        return self._column
 
     @property
     def shape(self):
@@ -155,3 +171,16 @@ class matrix:
     @property
     def T(self):
         return self._T
+
+
+def zeros(shape: list or tuple):
+    if isinstance(shape, list) or isinstance(shape, tuple):
+        try:
+            return matrix([
+                [0 for _ in range(shape[1])]
+                    for _ in range(shape[0])
+            ])
+        except ValueError:
+            raise ValueError('expect the shape (int, int) and the length is 2, but {} and {}'.format(shape, len(shape)))
+    else:
+        raise TypeError('Not supported type {}.'.format(type(shape)))
