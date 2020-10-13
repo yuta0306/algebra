@@ -27,9 +27,9 @@ class matrix:
                     raise TypeError('{} is not matrix'.format(data))
                 _column = compare
         
-        self.data = data
-        self.shape = _row, _column
-        self.T = [
+        self._data = data
+        self._shape = _row, _column
+        self._T = [
             list(row) for row in zip(*data)
         ]
 
@@ -133,3 +133,21 @@ class matrix:
 
     def __rdiv__(self, other):
         raise TypeError('cannot use operator (/) for matrix')
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.deleter
+    def data(self):
+        self._data = None
+        self._shape = None
+        self._T = None
+
+    @property
+    def shape(self):
+        return self._shape
+
+    @property
+    def T(self):
+        return self._T
