@@ -35,7 +35,11 @@ class matrix:
 
                 
     def __repr__(self):
-        return 'matrix({})'.format(self.data)
+        p = '['
+        for row in self.data:
+            p += '\n         ' + str(row)
+        p += '\n       ]'
+        return 'matrix({})\n'.format(p)
 
     def __add__(self, other):
         if isinstance(other, matrix):
