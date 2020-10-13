@@ -22,13 +22,16 @@ print(alg.zeros_like(x))
 
 print(alg.ones((3, 3)))
 # matrix([
-#          [0, 0, 0]
-#          [0, 0, 0]
-#        ])
-
-print(alg.ones_like(x))
-# matrix([
 #          [1, 0, 0]
 #          [0, 1, 0]
 #          [0, 0, 1]
 #        ])
+
+print(alg.ones_like(x))
+# Traceback (most recent call last):
+#   File "main.py", line 16, in <module>
+#     print(alg.ones_like(x))
+#   File "opt/algebra.py", line 217, in ones_like
+#     raise ValueError('expect the shape ({0}, {0}), but ({1})'.format(array.row, array.shape))
+# ValueError: expect the shape (2, 2), but ((2, 3))
+
