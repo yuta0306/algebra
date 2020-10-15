@@ -3,6 +3,8 @@ import algebra as alg
 x = alg.matrix([[0, 1, 2], [3, 4, 5]])
 y = alg.matrix([[1, 2], [3, 4], [5, 6]])
 
+print(alg.is_symmetric(x))
+
 print(x.T, x.T.shape)
 # matrix([
 #          [0, 3]
@@ -34,4 +36,3 @@ print(alg.ones_like(x))
 #   File "opt/algebra.py", line 217, in ones_like
 #     raise ValueError('expect the shape ({0}, {0}), but ({1})'.format(array.row, array.shape))
 # ValueError: expect the shape (2, 2), but ((2, 3))
-
