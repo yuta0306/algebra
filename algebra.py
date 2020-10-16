@@ -240,8 +240,15 @@ def is_symmetric(inputs: T) -> bool:
 
 def is_diagonal(inputs: T) -> bool:
     if isinstance(inputs, matrix):
-        row = inputs.row
-        col = inputs.column
-        if row == col:
+        if is_square(inputs):
+            row = inputs.row
+            col = inputs.column
             for i in range(row):
-                pass
+                for j in range(col):
+                    if i != j and inputs[i][j] != 0:
+                        return False
+            return True
+        else:
+            raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
+    else:
+        raise TypeError('expect type matrix, but {}'.format(type(inputs))
