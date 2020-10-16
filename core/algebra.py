@@ -1,6 +1,8 @@
 from typing import TypeVar, Generic
 T = TypeVar('T')
 
+
+
 class matrix(Generic[T]):
     def __init__(self, data: list):
         if not isinstance(data, list):

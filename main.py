@@ -1,4 +1,4 @@
-import algebra as alg
+import core.algebra as alg
 
 x = alg.matrix([[0, 1, 2], [3, 4, 5]])
 y = alg.matrix([[1, 2], [3, 4], [5, 6]])
