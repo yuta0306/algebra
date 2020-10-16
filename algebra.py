@@ -221,8 +221,27 @@ def ones_like(inputs: T) -> T:
     else:
         raise TypeError('Not supprted type {}'.format(type(inputs)))
 
+def is_square(inputs: T) -> bool:
+    if isinstance(inputs, matrix):
+        row = inputs.row
+        col = inputs.column
+        if row == col:
+            return True
+        else:
+            return False
+    else:
+        raise TypeError('expect type matrix, but {}'.format(type(inputs)))
+
 def is_symmetric(inputs: T) -> bool:
     if isinstance(inputs, matrix):
         return True if inputs == inputs.T else False
     else:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
+
+def is_diagonal(inputs: T) -> bool:
+    if isinstance(inputs, matrix):
+        row = inputs.row
+        col = inputs.column
+        if row == col:
+            for i in range(row):
+                pass
