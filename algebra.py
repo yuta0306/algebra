@@ -234,7 +234,11 @@ def is_square(inputs: T) -> bool:
 
 def is_symmetric(inputs: T) -> bool:
     if isinstance(inputs, matrix):
-        return True if inputs == inputs.T else False
+        if is_square(inputs):
+            return inputs == inputs.T
+        else:
+            raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
+
     else:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
 
@@ -251,4 +255,4 @@ def is_diagonal(inputs: T) -> bool:
         else:
             raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
     else:
-        raise TypeError('expect type matrix, but {}'.format(type(inputs))
+        raise TypeError('expect type matrix, but {}'.format(type(inputs)))

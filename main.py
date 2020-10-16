@@ -3,7 +3,6 @@ import algebra as alg
 x = alg.matrix([[0, 1, 2], [3, 4, 5]])
 y = alg.matrix([[1, 2], [3, 4], [5, 6]])
 
-print(alg.is_symmetric(x))
 
 print(x.T, x.T.shape)
 # matrix([
