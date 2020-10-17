@@ -9,7 +9,11 @@ try:
     __all__ += functions.__all__
 
 except ImportError as e:
-    sys.stderr.write("Import error\n")
+    msg = (
+        "Catch Import error: "
+        "There are some problems in algebra.py or functions.py\n"
+        )
+    sys.stderr.write(msg)
     raise ImportError()
 
 finally:
