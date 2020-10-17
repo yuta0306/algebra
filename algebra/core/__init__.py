@@ -1,13 +1,15 @@
 import sys
 try:
-    import algebra
-    print('functions')
-    from .  import functions
+    from . import algebra
+    from .algebra import *
+    from . import functions
+    from .functions import *
 
-    print(dir())
+    __all__ = ['matrix']
+    __all__ += functions.__all__
 
-except ImportError:
-    sys.stderr.write("Import error")
+except ImportError as e:
+    sys.stderr.write("Import error\n")
     raise ImportError()
 
 finally:

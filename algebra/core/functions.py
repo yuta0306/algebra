@@ -1,8 +1,10 @@
 import os
 import sys
 
-from ..algebra import matrix
-from .._overrides import set_module
+from .algebra import matrix
+from ._overrides import set_module
+
+T = matrix
 
 @set_module('algebra')
 def zeros(shape: list or tuple) -> T:
@@ -93,4 +95,4 @@ def is_diagonal(inputs: T) -> bool:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
 
 __all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
-            'is diagonal']
+            'is_diagonal']

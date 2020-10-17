@@ -35,5 +35,3 @@ print(alg.ones_like(x))
 #   File "opt/algebra.py", line 217, in ones_like
 #     raise ValueError('expect the shape ({0}, {0}), but ({1})'.format(array.row, array.shape))
 # ValueError: expect the shape (2, 2), but ((2, 3))
-
-import numpy

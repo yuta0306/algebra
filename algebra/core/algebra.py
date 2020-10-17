@@ -1,5 +1,5 @@
 from typing import TypeVar, Generic
-from _overrides import set_module
+from ._overrides import set_module
 
 T = TypeVar('T')
 
@@ -147,6 +147,9 @@ class matrix(Generic[T]):
     def __eq__(self, other: any) -> bool:
         return self._data == other._data
 
+    def __ne__(self, other: any) -> bool:
+        return self._data != other._data
+
     @property
     def data(self):
         return self._data
@@ -175,3 +178,5 @@ class matrix(Generic[T]):
         return matrix([
                 list(row) for row in zip(*self._data)
             ])
+
+__all__ = ['matrix']

@@ -1,10 +1,11 @@
 import sys
 
 try:
-    print('core')
     from . import core
+    from .core import *
 
-    print(dir())
+    __all__ = []
+    __all__ += core.__all__
 
 except ImportError:
     sys.stderr.write("Could not import algebra\n")
