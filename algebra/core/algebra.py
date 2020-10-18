@@ -12,7 +12,7 @@ class matrix(Generic[T]):
         _column = None
         _is_vector = False
         for elm in data:
-            if isinstance(elm, int) or isinstance(elm, float):
+            if isinstance(elm, (int, float)):
                 _is_vector = True
             else:
                 _is_vector = False
@@ -22,7 +22,7 @@ class matrix(Generic[T]):
 
         for inner in data:
             for elm in inner:
-                if not isinstance(elm, int) or isinstance(elm, float):
+                if not isinstance(elm, (int, float)):
                     raise TypeError('{} is not matrix.'.format(data))
             if _column is None:
                 _column = len(inner)
@@ -115,7 +115,7 @@ class matrix(Generic[T]):
             raise TypeError('cannot multiply {} and {}.'.format(type(self), type(other)))
 
     def __rmul__(self, other: int or float) -> T:
-        if isinstance(other, int) or isinstance(other, float):
+        if isinstance(other, (int, float)):
             return matrix([
                 [other * x for x in X]
                     for X in self.data
