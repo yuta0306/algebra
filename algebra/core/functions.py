@@ -4,11 +4,45 @@ import sys
 from .algebra import matrix
 from ._overrides import set_module
 
+__all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
+            'is_diagonal']
+
 T = matrix
 
 @set_module('algebra')
 def zeros(shape: list or tuple) -> T:
-    if isinstance(shape, list) or isinstance(shape, tuple):
+    """
+    >>> import algebra as alg
+    >>> a = alg.zeros((2, 2))
+    >>> a
+    matrix([
+            [0, 0]
+            [0, 0]
+        ])
+
+    >>> b = alg.zeros([2, 2])
+    >>> b
+    matrix([
+            [0, 0]
+            [0, 0]
+        ])
+
+    >>> c = alg.zeros((2, 4))
+    >>> c
+    matrix([
+            [0, 0, 0, 0]
+            [0, 0, 0, 0]
+        ])
+
+    >>> d = alg.zeros(2)
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "your-path/algebra/algebra/core/functions.py", line 20, in zeros
+        raise TypeError('Not supported type {}'.format(type(shape)))
+    TypeError: Not supported type <class 'int'>
+    
+    """
+    if isinstance(shape, (tuple, list)):
         try:
             return matrix([
                 [0 for _ in range(shape[1])]
@@ -21,6 +55,22 @@ def zeros(shape: list or tuple) -> T:
 
 @set_module('algebra')
 def zeros_like(inputs: T) -> T:
+    """
+    >>> a = alg.matrix([[1, 2], [3, 4]])
+    >>> a
+    matrix([
+            [1, 2]
+            [3, 4]
+        ])
+
+    >>> b = alg.zeros_like(a)
+    >>> b
+    matrix([
+            [0, 0]
+            [0, 0]
+        ])
+
+    """
     if isinstance(inputs, matrix):
         return matrix([
             [0 for _ in range(inputs.column)]
@@ -31,7 +81,38 @@ def zeros_like(inputs: T) -> T:
 
 @set_module('algebra')
 def ones(shape: list or tuple) -> T:
-    if isinstance(shape, list) or isinstance(shape, tuple):
+    """
+    >>> import algebra as alg
+    >>> a = alg.ones((2, 2))
+    >>> a
+    matrix([
+            [1, 0]
+            [0, 1]
+        ])
+
+    >>> b = alg.ones([2, 2])
+    >>> b
+    matrix([
+            [1, 0]
+            [0, 1]
+        ])
+
+    >>> c = alg.ones((2, 4))
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "your-path/algebra/algebra/core/functions.py", line 41, in ones
+        
+    ValueError: expect the shape (2, 2), but (2, 4)
+
+    >>> d = alg.ones(2)
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "your-path/algebra/algebra/core/functions.py", line 20, in zeros
+        raise TypeError('Not supported type {}'.format(type(shape)))
+    TypeError: Not supported type <class 'int'>
+    
+    """
+    if isinstance(shape, (tuple, list)):
         if shape[0] == shape[1]:
             return matrix([
                 [0 if not i==j else 1 for j in range(shape[1])]
@@ -44,6 +125,35 @@ def ones(shape: list or tuple) -> T:
 
 @set_module('algebra')
 def ones_like(inputs: T) -> T:
+    """
+    >>> a = alg.matrix([[1, 2], [3, 4]])
+    >>> a
+    matrix([
+            [1, 2]
+            [3, 4]
+        ])
+
+    >>> b = alg.zeros_like(a)
+    >>> b
+    matrix([
+            [1, 0]
+            [0, 1]
+        ])
+
+    >>> c = alg.matrix([[1, 2, 3, 4], [5, 6, 7, 8]])
+    >>> c
+    matrix([
+            [1, 2, 3, 4]
+            [5, 6, 7, 8]
+        ])
+
+    >>> d = alg.ones_like(c)
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "your-path/algebra/algebra/core/functions.py", line 54, in ones_like
+        @set_module('algebra')
+    ValueError: expect the shape (2, 2), but (2, 4)
+    """
     if isinstance(inputs, matrix):
         if inputs.row == inputs.column:
             return matrix([
@@ -93,6 +203,3 @@ def is_diagonal(inputs: T) -> bool:
             raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
     else:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
-
-__all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
-            'is_diagonal']
