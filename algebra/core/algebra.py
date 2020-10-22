@@ -33,7 +33,11 @@ class matrix(Generic[T]):
                 if not _column == compare:
                     raise TypeError('{} is not matrix'.format(data))
                 _column = compare
-        
+        if _row == 1 or _column == 1:
+            _is_vector = True
+        else:
+            _is_vector = False
+
         self._data = data
         self._row = _row
         self._column = _column

@@ -216,3 +216,19 @@ def is_vector(inputs: T) -> bool:
         return inputs.is_vector
     except TypeError:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
+
+@set_module('algebra')
+def is_zerovec(inputs: T) -> T:
+    try:
+        inputs = asmatrix(inputs)
+        if is_vector(inputs):
+            for row in inputs.data:
+                for col in row:
+                    if not col == 0:
+                        return False
+            else:
+                return True
+        else:
+            return False
+    except TypeError:
+        raise TypeError('expect type matrix, but {}'.format(type(inputs)))
