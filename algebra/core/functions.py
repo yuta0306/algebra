@@ -2,6 +2,7 @@ from typing import TypeVar
 
 from .algebra import matrix
 from ._overrides import set_module
+from .convert import *
 
 __all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
             'is_diagonal', 'is_vector']
@@ -70,12 +71,13 @@ def zeros_like(inputs: T) -> T:
         ])
 
     """
-    if isinstance(inputs, matrix):
+    try:
+        inputs = asmatrix(inputs)
         return matrix([
             [0 for _ in range(inputs.column)]
                 for _ in range(inputs.row)
         ])
-    else:
+    except TypeError:
         raise TypeError('Not supprted type {}'.format(type(inputs)))
 
 @set_module('algebra')
@@ -153,7 +155,8 @@ def ones_like(inputs: T) -> T:
         @set_module('algebra')
     ValueError: expect the shape (2, 2), but (2, 4)
     """
-    if isinstance(inputs, matrix):
+    try:
+        inputs = asmatrix(inputs)
         if inputs.row == inputs.column:
             return matrix([
                 [0 if not i==j else 1 for i in range(inputs.column)]
@@ -161,35 +164,38 @@ def ones_like(inputs: T) -> T:
             ])
         else:
             raise ValueError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
-    else:
+    except TypeError:
         raise TypeError('Not supprted type {}'.format(type(inputs)))
 
 @set_module('algebra')
 def is_square(inputs: T) -> bool:
-    if isinstance(inputs, matrix):
+    try:
+        inputs = asmatrix(inputs)
         row = inputs.row
         col = inputs.column
         if row == col:
             return True
         else:
             return False
-    else:
+    except TypeError:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
 
 @set_module('algebra')
 def is_symmetric(inputs: T) -> bool:
-    if isinstance(inputs, matrix):
+    try:
+        inputs = asmatrix(inputs)
         if is_square(inputs):
             return inputs == inputs.T
         else:
             raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
 
-    else:
+    except TypeError:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
 
 @set_module('algebra')
 def is_diagonal(inputs: T) -> bool:
-    if isinstance(inputs, matrix):
+    try:
+        inputs = asmatrix(inputs)
         if is_square(inputs):
             row = inputs.row
             col = inputs.column
@@ -200,12 +206,13 @@ def is_diagonal(inputs: T) -> bool:
             return True
         else:
             raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
-    else:
+    except TypeError:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
 
 @set_module('algebra')
 def is_vector(inputs: T) -> bool:
-    if isinstance(inputs, matrix):
+    try:
+        inputs = asmatrix(inputs)
         return inputs.is_vector
-    else:
+    except TypeError:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))
