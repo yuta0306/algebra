@@ -5,7 +5,7 @@ from .algebra import matrix
 from ._overrides import set_module
 
 __all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
-            'is_diagonal']
+            'is_diagonal', 'is_vector']
 
 T = matrix
 
@@ -201,5 +201,12 @@ def is_diagonal(inputs: T) -> bool:
             return True
         else:
             raise TypeError('expect the shape ({0}, {0}), but {1}'.format(inputs.row, inputs.shape))
+    else:
+        raise TypeError('expect type matrix, but {}'.format(type(inputs)))
+
+@set_module('algebra')
+def is_vector(inputs: T) -> bool:
+    if isinstance(inputs, matrix):
+        return inputs.is_vector
     else:
         raise TypeError('expect type matrix, but {}'.format(type(inputs)))

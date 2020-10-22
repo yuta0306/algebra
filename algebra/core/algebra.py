@@ -3,6 +3,8 @@ from ._overrides import set_module
 
 T = TypeVar('T')
 
+__all__ = ['matrix']
+
 class matrix(Generic[T]):
     def __init__(self, data: list):
         if not isinstance(data, list):
@@ -36,6 +38,7 @@ class matrix(Generic[T]):
         self._row = _row
         self._column = _column
         self._shape = _row, _column
+        self._is_vector = _is_vector
                 
     def __repr__(self):
         p = '['
@@ -179,4 +182,6 @@ class matrix(Generic[T]):
                 list(row) for row in zip(*self._data)
             ])
 
-__all__ = ['matrix']
+    @property
+    def is_vector(self) -> bool:
+        return self._is_vector
