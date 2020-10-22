@@ -1,5 +1,4 @@
-import os
-import sys
+from typing import TypeVar
 
 from .algebra import matrix
 from ._overrides import set_module
@@ -7,7 +6,7 @@ from ._overrides import set_module
 __all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
             'is_diagonal', 'is_vector']
 
-T = matrix
+T = TypeVar('T')
 
 @set_module('algebra')
 def zeros(shape: list or tuple) -> T:
