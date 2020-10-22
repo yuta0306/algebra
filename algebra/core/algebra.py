@@ -187,5 +187,16 @@ class matrix(Generic[T]):
             ])
 
     @property
+    def trace(self) -> T:
+        if self._row == self._column:
+            return matrix([
+                row[i] for i, row in enumerate(self._data)
+            ])
+        else:
+            return None
+
+    @property
     def is_vector(self) -> bool:
         return self._is_vector
+
+matrix.__module__ = 'algebra'

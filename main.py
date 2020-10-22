@@ -11,6 +11,9 @@ print(x.T, x.T.shape)
 #          [2, 5]
 #        ])
 
+print(x.trace)
+# None
+
 print(alg.is_zerovec(x), alg.is_zerovec([0, 0, 0]))
 # False True
 
