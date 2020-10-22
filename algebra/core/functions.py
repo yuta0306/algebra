@@ -5,7 +5,7 @@ from ._overrides import set_module
 from .convert import *
 
 __all__ = ['zeros', 'zeros_like', 'ones', 'ones_like', 'is_square', 'is_symmetric',
-            'is_diagonal', 'is_vector']
+            'is_diagonal', 'is_vector', 'is_zerovec']
 
 T = TypeVar('T')
 

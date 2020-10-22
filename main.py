@@ -11,8 +11,15 @@ print(x.T, x.T.shape)
 #          [2, 5]
 #        ])
 
+print(alg.is_zerovec(x), alg.is_zerovec([0, 0, 0]))
+# False True
+
 print(alg.zeros((3, 3)))
-#  (3, 2)
+# matrix([
+#          [0, 0, 0]
+#          [0, 0, 0]
+#          [0, 0, 0]
+#        ])
 
 print(alg.zeros_like(x))
 # matrix([
